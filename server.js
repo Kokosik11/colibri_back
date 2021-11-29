@@ -29,10 +29,12 @@ app.use(express.static(path.join(__dirname, 'client')));
 
 const PORT = config.PORT || 3010;
 
+const FaqRouter = require('./routes/faq.router');
 const ServiceRouter = require('./routes/service.router');
 const ProjectRouter = require('./routes/project.router');
 const BidRouter = require('./routes/bid.router');
 
+app.use('/faq', FaqRouter);
 app.use('/service', ServiceRouter);
 app.use('/project', ProjectRouter);
 app.use('/bid', BidRouter);
