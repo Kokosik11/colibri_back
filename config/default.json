@@ -1,0 +1,16 @@
+{
+    "db": {
+        "host": "Kokosik11:SWfMV3C0j7gZz14J@cluster0.aq7y1.mongodb.net",
+        "port": 27017,
+        "database": "colibri-dc"
+    },
+
+    "bot": {
+        "TG_TOKEN": "2096424684:AAGr6x7-CDIEd9XFEaQdDIzS8piGRVPKmXk",
+        "CHANNEL_ID": "-1001579708821"
+    },
+
+    "WHITELIST_DOMAINS":"http://localhost:3000",
+    "PORT": 3010,
+    "MODE": "development"
+}
