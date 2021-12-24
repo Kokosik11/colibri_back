@@ -12,5 +12,6 @@
 
     "WHITELIST_DOMAINS":"http://localhost:3000",
     "PORT": 3010,
-    "MODE": "development"
+    "MODE": "development",
+    "TOKEN_KEY": "fdsg8asdf4sadfv"
 }

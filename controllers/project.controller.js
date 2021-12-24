@@ -12,12 +12,12 @@ module.exports.getAll = (req, res, next) => {
 module.exports.create = (req, res, next) => {
     if(!req.body.title) return res.status(411).json({ "err": "Title is required" })
     if(!req.body.link) return res.status(411).json({ "err": "Link is required" })
-    if(!req.body.imageURL) return res.status(411).json({ "err": "ImageURL is required" })
-    
+    if(!req.file) return res.status(411).json({ "err": "File is required"})
+   
     let project = new Project({
         title: req.body.title,
         link: req.body.link,
-        imageURL: req.body.imageURL,
+        imageURL: req.file.path.replace("static", ""),
     })
 
     project.save((err, project) => {
