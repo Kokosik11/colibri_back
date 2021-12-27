@@ -1,8 +1,12 @@
 const config = require('config');
 const express = require('express');
+const session = require('express-session');
 // const cors = require("cors");
 const path = require('path');
-const serveStatic = require('serve-static')
+const serveStatic = require('serve-static');
+
+const MongoStore = require('connect-mongo');
+const mongoose = require('mongoose');
 
 // const whitelist = config.WHITELIST_DOMAINS
 //     ? config.WHITELIST_DOMAINS.split(",")
@@ -28,6 +32,11 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
 app.use(express.static(path.join(__dirname, 'static')));
+app.use(session({
+    secret: config.SECRET_KEY,
+    maxAge: new Date(Date.now() + 3600000),
+    store: MongoStore.create({ mongoUrl: "mongodb+srv://" + config.db.host + "/" + config.db.database}),
+}));
 
 const PORT = process.env.PORT || config.PORT || 3010;
 

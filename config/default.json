@@ -13,5 +13,6 @@
     "WHITELIST_DOMAINS":"http://localhost:3000,http://localhost:3010",
     "PORT": 3010,
     "MODE": "development",
-    "TOKEN_KEY": "fdsg8asdf4sadfv"
+    "TOKEN_KEY": "fdsg8asdf4sadfv",
+    "SECRET_KEY": "colibri-secret-key-1sf45sdv"
 }
