@@ -8,6 +8,15 @@ const serveStatic = require('serve-static');
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
 
+const http = require('http');
+const https = require('https');
+const fs = require('fs');
+
+const key = fs.readFileSync('./ssl/server.key', 'utf8');
+const crt = fs.readFileSync('./ssl/server.crt', 'utf8');
+
+const credentials = { key, cert: crt };
+
 // const whitelist = config.WHITELIST_DOMAINS
 //     ? config.WHITELIST_DOMAINS.split(",")
 //     : []
@@ -67,6 +76,12 @@ app.get(/.*/, (req, res) => {
 //     res.sendFile(path.join(__dirname, '/client/index.html'))
 // })
 
-app.listen(PORT, () => {
-    console.log(`Server listen on http://localhost:${PORT}/`);
-})
+// app.listen(PORT, () => {
+//     console.log(`Server listen on http://localhost:${PORT}/`);
+// })
+
+const httpServer = http.createServer(app);
+const httpsServer = https.createServer(credentials, app);
+
+httpServer.listen(PORT);
+httpsServer.listen(8443);
