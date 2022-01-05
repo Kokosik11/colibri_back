@@ -1,7 +1,7 @@
 const config = require('config');
 const express = require('express');
 const session = require('express-session');
-// const cors = require("cors");
+const cors = require("cors");
 const path = require('path');
 const serveStatic = require('serve-static');
 
@@ -17,26 +17,26 @@ const crt = fs.readFileSync('./ssl/server.crt', 'utf8');
 
 const credentials = { key, cert: crt };
 
-// const whitelist = config.WHITELIST_DOMAINS
-//     ? config.WHITELIST_DOMAINS.split(",")
-//     : []
+const whitelist = config.WHITELIST_DOMAINS
+    ? config.WHITELIST_DOMAINS.split(",")
+    : []
 
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         if (!origin || whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error("Not allowed by CORS"))
-//         }
-//     },
-//     credentials: true,
-// }
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    credentials: true,
+}
 
 const app = express();
 
 require('./config/db');
 
-// app.use(cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
@@ -49,6 +49,7 @@ app.use(session({
 
 const PORT = process.env.PORT || config.PORT || 3010;
 
+const DocumentRouter = require('./routes/document.router');
 const FaqRouter = require('./routes/faq.router');
 const ServiceRouter = require('./routes/service.router');
 const ProjectRouter = require('./routes/project.router');
@@ -57,6 +58,7 @@ const UserRouter = require('./routes/user.router');
 
 const ApiRouter = express.Router();
 
+ApiRouter.use('/document', DocumentRouter);
 ApiRouter.use('/faq', FaqRouter);
 ApiRouter.use('/service', ServiceRouter);
 ApiRouter.use('/project', ProjectRouter);
