@@ -3,6 +3,8 @@ Allow: /
 Allow: /faq
 Allow: /documents
 Allow: /roadmap
-Disallow: /api
+Allow: /documents
+Allow: /businesscard
+Disallow: /api/*
 
 Sitemap: http://colibridc.tech/sitemap.xml
