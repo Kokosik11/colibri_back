@@ -1,9 +1,11 @@
 const config = require('config');
 const express = require('express');
 const session = require('express-session');
-// const cors = require("cors");
+const cors = require("cors");
 const path = require('path');
 const serveStatic = require('serve-static');
+const cookieParser = require('cookie-parser');
+const csrf = require('csurf');
 
 const MongoStore = require('connect-mongo');
 const mongoose = require('mongoose');
@@ -17,26 +19,30 @@ const crt = fs.readFileSync('./ssl/server.crt', 'utf8');
 
 const credentials = { key, cert: crt };
 
-// const whitelist = config.WHITELIST_DOMAINS
-//     ? config.WHITELIST_DOMAINS.split(",")
-//     : []
+const whitelist = config.WHITELIST_DOMAINS
+    ? config.WHITELIST_DOMAINS.split(",")
+    : []
 
-// const corsOptions = {
-//     origin: function (origin, callback) {
-//         if (!origin || whitelist.indexOf(origin) !== -1) {
-//             callback(null, true)
-//         } else {
-//             callback(new Error("Not allowed by CORS"))
-//         }
-//     },
-//     credentials: true,
-// }
+const corsOptions = {
+    origin: function (origin, callback) {
+        if (!origin || whitelist.indexOf(origin) !== -1) {
+            callback(null, true)
+        } else {
+            callback(new Error("Not allowed by CORS"))
+        }
+    },
+    credentials: true,
+}
 
 const app = express();
 
 require('./config/db');
 
-// app.use(cors(corsOptions));
+if(process.env.NODE_ENV !== 'production') {
+    app.use(cors(corsOptions));
+}
+
+app.use(cookieParser());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static(path.join(__dirname, 'client')));
@@ -64,6 +70,10 @@ ApiRouter.use('/service', ServiceRouter);
 ApiRouter.use('/project', ProjectRouter);
 ApiRouter.use('/bid', BidRouter);
 ApiRouter.use('/user', UserRouter);
+
+// app.all('*', csrf({ cookie: true }), function (req, res) {
+//     res.cookie('XSRF-TOKEN', req.csrfToken())
+// })
 
 app.use('/api', ApiRouter)
 

@@ -17,7 +17,7 @@ module.exports.getAll = (req, res, next) => {
 module.exports.create = (req, res, next) => {
     if(!req.body.email) return res.status(411).json({ "err": "email is required" })
     if(!req.body.username) return res.status(411).json({ "err": "Username is required" })
-    
+        
     let bidTg = [
         '*** Опа, заявочка:',
         '<b>Email:</b> ' + req.body.email,
@@ -49,4 +49,8 @@ module.exports.create = (req, res, next) => {
         console.log(bid);
         res.status(200).json({ "message": bid });
     })
+}
+
+module.exports.csrfToken = (req, res) => {
+    res.status(200).json({ csrf: req.csrfToken() });
 }
