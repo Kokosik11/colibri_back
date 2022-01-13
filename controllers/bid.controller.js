@@ -52,5 +52,7 @@ module.exports.create = (req, res, next) => {
 }
 
 module.exports.csrfToken = (req, res) => {
+    res.cookie('XSRF-TOKEN', req.csrfToken());
+    res.locals.csrftoken = req.csrfToken();
     res.status(200).json({ csrf: req.csrfToken() });
 }
