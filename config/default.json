@@ -10,7 +10,7 @@
         "CHANNEL_ID": "-1001579708821"
     },
 
-    "WHITELIST_DOMAINS":"http://localhost:3000,http://localhost:3010",
+    "WHITELIST_DOMAINS":"http://localhost:3000,http://localhost:3010,http://192.168.2.71:3000",
     "PORT": 3010,
     "MODE": "development",
     "TOKEN_KEY": "fdsg8asdf4sadfv",
