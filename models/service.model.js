@@ -21,7 +21,8 @@ const Service = new Schema({
     background: {
         type: String,
         default: ''
-    }
+    },
+    details: String,
 })
 
 module.exports = mongoose.model('Service', Service);  

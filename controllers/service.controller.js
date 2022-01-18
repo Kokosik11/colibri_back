@@ -18,7 +18,8 @@ module.exports.create = (req, res, next) => {
         title: req.body.title,
         description: req.body.description,
         term: req.body.term,
-        priceLevel: req.body.priceLevel
+        priceLevel: req.body.priceLevel,
+        details: req.body.details
     })
 
     service.save((err, service) => {
