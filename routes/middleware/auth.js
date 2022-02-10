@@ -2,7 +2,11 @@ const config = require('config');
 const jwt = require('jsonwebtoken');
 
 module.exports.auth = (req, res, next) => {
-    const token = req.headers.authorization.split(' ')[1];
+    let token = null;
+
+    if (req.headers.authorization) {
+        token = req.headers.authorization.split(' ')[1];
+    }
 
     if(!token) {
         return res.status(403).json({ error: "A token is required for auth" });
